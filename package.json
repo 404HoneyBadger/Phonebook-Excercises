@@ -1,0 +1,27 @@
+{
+  "name": "phonebook-excercises",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/404HoneyBadger/Phonebook-Excercises.git"
+  },
+  "author": "Natalee Nieves",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/404HoneyBadger/Phonebook-Excercises/issues"
+  },
+  "homepage": "https://github.com/404HoneyBadger/Phonebook-Excercises#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  },
+  "dependencies": {
+    "express": "^4.17.3"
+  }
+}
