@@ -1,7 +1,9 @@
 const express = require('express')
 const app = express()
-
+var morgan = require('morgan')
+var middle = morgan('tiny')
 app.use(express.json())
+app.use(middle)
 
 let pBook = [
     {
@@ -73,8 +75,10 @@ app.post('/api/persons', (request, response) => {
       }
 
       const check = pBook.findIndex(dupName => dupName.name == body.name)
-      if(body.name == check) {
-        response.send({error:'name must be unique'})
+      if(-1 != check) { //-1 means no match so OPPOSITE (!=) MEANS MATCH and match spits out error
+        return response.status(400).json({ 
+          error: 'name must be unique' 
+        })
       }
 
       
