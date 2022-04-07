@@ -1,9 +1,21 @@
-const express = require('express')
+const express = require('express')// handles all the requests but no logging
 const app = express()
-var morgan = require('morgan')
-var middle = morgan('tiny')
-app.use(express.json())
-app.use(middle)
+var morgan = require('morgan') //morgan logs all the requests and response codes by default, can do more like log the content of the response but need add-ons.
+var middle = morgan(':method :url :status :res[content-length] - :response-time ms :bodbabe') //replace ('tiny') with the acutal tiny output and add :bodbabe to call the custom token I made below
+
+morgan.token('bodbabe', function (req, res) {
+  if (req.method === 'POST') {
+    return JSON.stringify(req.body); //this is the custom token we created to add to 'middle' when it gets called
+  } else {
+    return null;
+  }
+});
+
+app.use(morgan(':bodbabe'))// this is the last token on 'var middle', the token itself has an if/else statement about the conditions it needs to execute inside the assigned 'middle' format
+app.use(middle)// this is the assigned default format we created for all requests(GET, POST, PUT, DELETE), the last token 'bodbabe' will execute only if the parameters in the if/else statemnt is satisfied (HAS TO BE  REQ.POST)
+app.use(morgan('tiny'))// this is a default in morgan's library, we dont use it for this excersice, but we did copy the exact tokens and just added 'bodbabe'
+
+app.use(express.json())//
 
 let pBook = [
     {
@@ -75,7 +87,7 @@ app.post('/api/persons', (request, response) => {
       }
 
       const check = pBook.findIndex(dupName => dupName.name == body.name)
-      if(-1 != check) { //-1 means no match so OPPOSITE (!=) MEANS MATCH and match spits out error
+      if(-1 != check) { //-1 means no match (for findIndex()) so OPPOSITE (!=) MEANS MATCH and match spits out error
         return response.status(400).json({ 
           error: 'name must be unique' 
         })

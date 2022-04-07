@@ -3,7 +3,11 @@ Content-Type: application/json
 
 {
 
-    "name": "Dan Abramov",
+    "name": "Bussin Abramov",
     "number": "9809894509"
 }
+
+###
+
+GET http://localhost:3003/api/persons
 
